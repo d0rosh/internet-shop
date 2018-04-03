@@ -1,0 +1,67 @@
+<div class="container basket_wrap">
+	<div ng-show="ctrl.basket.length>0" class="row">
+		<div class="col-8">
+			<table  class="table table-hover table-bordered">
+	            <tr>
+	            	<th class="text-center">
+	                    Images
+	                </th>
+	                <th class="text-center">
+	                    Item
+	                </th>
+	                <th class="text-center">
+	                    Quantity
+	                </th>
+	                <th class="text-center">
+	                    Price
+	                </th>
+	      
+	                <th class="text-center">
+	                    Delete
+	                </th>
+	            </tr>
+				<tr class="content-basket" ng-repeat="item in ctrl.basket">
+					<td><img ng-src="{{item.img}}" alt="img"></td>
+					<td>{{item.name}}</td>
+					<td>
+						<div class="wrap_quan">
+							<button ng-disabled="item.quantity <= 1" ng-click="ctrl.getTotalQuantity(item,-1)" class="cart-minus">-</button>
+							<input class="cart-input" type="text" ng-model="item.quantity"  ng-change="ctrl.getChangeTotalQuantity(item,item.quantity)">
+							<button ng-disabled="item.quantity > 1000" ng-click="ctrl.getTotalQuantity(item,+1)" class="cart-plus">+</button>
+						</div>
+					</td>
+					<td>{{item.price*item.quantity | uah}}</td>
+					<td><span ng-click="ctrl.deleteItem(item._id)" class="delete_item"><i class="fa fa-trash-o" aria-hidden="true"></i></span></td>
+				</tr>
+	            <tr>
+	                <th class="text-center">
+	                    Total
+	                </th>
+	                <th class="text-center">
+	                    
+	                </th>
+	                <th class="text-center">
+	                    {{ctrl.getTotalPrice() | uah}}
+	                </th>
+	      
+	                <th class="text-center">
+	                    
+	                </th>
+	            </tr>    
+	        </table>
+        </div>
+        <div class="col-4">
+        	<a href="#!/"><button class="btn btn-default btn-block" type="button">Back to store</button></a>
+        	<button ng-click="ctrl.clearBasket()" class="btn btn-danger btn-block" type="button">Clear cart</button>
+        	<button ng-click="ctrl.sendMail()"  class="btn btn-danger btn-block" type="button">Оформити замовлення</button>
+        </div>
+	</div>
+	<div ng-show="ctrl.basket.length==0" class="row">
+		<div class="col-12">
+			<div class="wrap_error">
+				<img src="img/error.png" alt="error">
+				<p>Ваша корзина поки порожня!</p>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>shop</title>
+    <script src="/dist/jquery.js"></script>
+	<script src="/angular.min.js"></script>
+    <script src="/angular-route.min.js"></script>
+    <script src="/ngStorage.min.js"></script>
+    <script src="main.js"></script>
+    <script src="/filter/filter.js"></script>
+    <script src="configuration/main-configuration.js"></script>
+    <script src="services.js"></script>
+    <script src="auth.js"></script>
+    <script src="page/category-men/categoryMen.js"></script>
+    <script src="page/category-woman/categoryWoman.js"></script>
+    <script src="page/basket/basket.js"></script>
+    <script src="page/home/home.js"></script>
+    <script src="page/item-info/itemInfo.js"></script>
+    <script src="page/profile/profile.js"></script>
+    <script src="page/login/login.js"></script>
+    <script src="js/add.js"></script>
+    <script src="page/item-in-category/itemInCategory.js"></script>
+    <script src="js/mainCtrl.js"></script>
+    <script src="directive/pagination/pagination.js"></script>
+    <script src="directive/size/size.js"></script>
+    <script src="jquery/jquery_plugins.js"></script>
+    <link rel="stylesheet" href="/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/media.css">
+
+
+
+</head>
+<body>
+    <header class="header" ng-controller="mainCtrl as ctrl">
+        <div class="auth">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">
+                        <a class="add" href="#!/add">+</a>
+                    </div>
+                    <div ng-cloak ng-show="!isAuthenticated" class="col-6">
+                        <a class="show_popup" rel="tabs_info" href="#">
+                            <i class="fa fa-user"></i>
+                        </a>
+                        <div class="popup tabs_info">
+                            <a class="close" href="#"></a>    
+                            <div class="selectTabs">
+                                <ul class="lineTabs">
+                                    <li class="active"><a href="#">Вхід</a></li>
+                                    <li><a href="#">Реєстрація</a></li>
+                                </ul>
+                                <div class="tab_content">
+                                    <div ng-show='ctrl.loading' class="spinner"><img src="img/loading.gif" alt="Logo"></div>
+                                    <div class="tab1">
+                                        <form novalidate="" class="form_auth" ng-model="ctrl.request" 
+                                        ng-submit="ctrl.sendAuth(ctrl.request)">
+                                            <label>
+                                                <input ng-model="ctrl.request.login" type="text" placeholder="логін" required>
+                                            </label>
+                                            <label>
+                                                <input ng-model="ctrl.request.password" type="password" placeholder="пароль" required>
+                                            </label>
+                                            <button class="btn_auth" type="submit">Sign in</button>
+                                        </form>
+                                    </div>
+                                    <div class="tab2">
+                                        <form novalidate name="registration" class="form_auth" ng-model="ctrl.requestRegistr" 
+                                              ng-submit="ctrl.sendRegistration(ctrl.requestRegistr)">
+                                            <label>
+                                                <input name='login' ng-change="ctrl.clearLoginMass()" type="text" ng-model="ctrl.requestRegistr.login" placeholder="введіть логін" 
+                                                ng-minlength='5' required>
+                                                <span ng-show="registration.login.$error.required && registration.login.$touched">
+                                                    login is required
+                                                </span>
+                                                <span ng-show='registration.login.$error.minlength && registration.login.$touched'>
+                                                    login is short
+                                                </span>
+                                                <span ng-show="ctrl.login">{{ctrl.login}}</span>
+                                            </label>
+                                            <label>
+                                                <input name='password' ng-change="ctrl.clearPassMass()""  ng-model="ctrl.requestRegistr.password" type="password"
+                                                   placeholder="введіть пароль" ng-minlength='5' ng-maxlength='16' required>
+                                                <span ng-show="registration.password.$error.required &&
+                                                    registration.password.$touched">
+                                                    password is required
+                                                </span>
+                                                <span ng-show='registration.password.$error.minlength && registration.password.$touched'>
+                                                    password length > 5
+                                                </span>
+                                                <span ng-show='registration.password.$error.maxlength && registration.password.$touched'>
+                                                    password length < 16
+                                                </span>
+                                                <span ng-show='ctrl.password'>{{ctrl.password}}</span>
+                                            </label>
+                                            <label>
+                                                <input name="repeatPassword" ng-model="ctrl.requestRegistr.repeat_password" type="password" placeholder="підтвердіть пароль" ng-minlength='5' ng-maxlength='12'
+                                                ng-pattern='ctrl.requestRegistr.password' required>
+                                                <span ng-show='registration.repeatPassword.$error.required &&
+                                                    registration.repeatPassword.$touched'>
+                                                    repeat password is required    
+                                                </span>
+                                                <span ng-show='registration.repeatPassword.$error.pattern && registration.repeatPassword.$touched'>
+                                                    passwords do not match
+                                                </span>
+                                            </label>
+                                            <label>
+                                                <input name="email" ng-change="ctrl.clearEmailMass()" 
+                                                ng-model="ctrl.requestRegistr.email"  type="email" placeholder='введіть емейл' 
+                                                ng-pattern='/^[\w+\d+.-]+\@[\w+\d+_+]+\.[\w+\d+._]{2,3}$/' required>
+                                                <span ng-show="registration.email.$invalid && registration.email.$touched && !registration.email.$error.required">
+                                                    email is invalid
+                                                </span>
+                                                <span ng-show="registration.email.$error.required && registration.email.$touched">
+                                                    not an email
+                                                </span>
+                                                <span ng-show="ctrl.email">{{ctrl.email}}</span>
+                                            </label>
+                                            <label>
+                                                <input name="phone" ng-change="ctrl.clearPhoneMass()" ng-model="ctrl.requestRegistr.phone" placeholder='+380...' ng-pattern='/^\+380\d{9}$/' required>
+                                                <span ng-show='registration.phone.$error.required &&
+                                                    registration.phone.$touched'>
+                                                    phone is required        
+                                                </span>
+                                                <span ng-show='registration.phone.$error.pattern && registration.phone.$touched'>
+                                                    phone is invalid
+                                                </span>
+                                                <span ng-show='ctrl.phone'>{{ctrl.phone}}</span>
+                                            </label>
+                                            <label>
+                                                <select ng-model="ctrl.requestRegistr.sex">
+                                                    <option value="men">Men</option>
+                                                    <option value="woman">Woman</option>
+                                                </select>
+                                            </label>
+                                            <button ng-disabled="registration.$invalid" class="btn_auth" type="submit">Register</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>          
+                        </div>  
+                    </div>
+                    <div class="col-6">
+                        <div class="dropdown_user" ng-cloak ng-show="isAuthenticated" ng-click="ctrl.triggerMenu()">
+                            <img ng-src="{{photo}}">
+                            <div ng-class="ctrl.isDropdownVisible ? 'dropdown-menu show' : 'dropdown-menu'">
+                                <a class="dropdown-item" href="#!/profile">Profile</a>
+                                <a class="dropdown-item" ng-click="ctrl.deleteSession()">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="nav">
+               <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-2 col-sm-6">
+                            <div class="logo">
+                                <a href="#!/"><img src="img/logo.png" alt="Logo"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-lg-6 col-sm-6">
+                            <button class="nav_btn">
+                                <div class="sandwich">
+                                    <div class='sw-topper'></div>
+                                    <div class='sw-bottom'></div>
+                                    <div class='sw-footer'></div>
+                                </div>
+                            </button>
+                            <div class="menu">
+                                <ul>
+                                    <li><a href="#!/categories_men">Men</a></li>
+                                    <li><a href="#!/categories_woman">Woman</a></li>
+                                    <li><a href="#">About</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">Support</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-lg-4 col-sm-12">
+                            <a href="#!/basket">
+                                <div class="basket">
+                                    <img src="img/basket.png" alt="Basket">
+                                    <span ng-cloak ng-show="ctrl.getCount() > 0">{{ctrl.getCount()}}</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+               </div>
+            </div>
+    </header>
+    <ng-view></ng-view>
+    <footer class="footer">This is footer</footer>
+
+</body>
+</html>
+

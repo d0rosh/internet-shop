@@ -1,0 +1,42 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+				<h2>Add  category</h2>
+              	<div class="input-group">
+              		<select ng-options="sex.name as sex.name for sex in ctrl.sex track by sex.id" class="form-control" id="sex" ng-model="ctrl.currentCategory.sex">
+		        	</select>
+	                <input ng-model="ctrl.currentCategory.name" type="text" class="form-control" placeholder="Add new category...">
+	                <input ng-model="ctrl.currentCategory.img" type="text" class="form-control" placeholder="Add new images...">
+	              	<span class="input-group-btn">
+	                	<button ng-click='ctrl.saveCategory()' class="btn btn-default" type="button">Add</button>
+	              	</span>
+              	</div>
+        </div>
+        <div class="col-md-12">
+        	<h2>Add item in category</h2>
+        	<div class="form-group row">
+		        <label class="col-form-label" for="category">Category:</label>        
+		        <select ng-options="category as category.name for category in ctrl.categories track by category._id" class="form-control" 		id="category" ng-model="ctrl.currentItem.category">
+		        </select>
+            </div>
+            <div class="input-group">
+	            <input ng-model="ctrl.currentItem.name" type="text" class="form-control" placeholder="Add new Item...">
+	            <input ng-model="ctrl.currentItem.price" type="text" class="form-control" placeholder="Add price">
+	            <input ng-model="ctrl.currentItem.img" type="text" class="form-control" placeholder="Add img">
+	            <input ng-model="ctrl.currentItem.size" type="text" class="form-control" placeholder="Add size">
+	            <select ng-options="brand.name as brand.name for brand in ctrl.brand track by brand.id" class="form-control" id="brand" ng-model="ctrl.currentItem.brand">
+		        </select>
+		        <select ng-model="ctrl.currentItem.season">
+		        	<option value="Spring">Spring</option>
+		        	<option value="Summer">Summer</option>
+		        	<option value="Autumn">Autumn</option>
+		        	<option value="Winter">Winter</option>
+		        	<option value="All season">All Season</option>
+		        </select>
+	            <span class="input-group-btn">
+	                <button ng-click='ctrl.saveItem()' class="btn btn-default" type="button">Add</button>
+	            </span>
+            </div>
+        </div>
+	</div>
+</div>

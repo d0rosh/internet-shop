@@ -1,0 +1,18 @@
+<div class="wrap_category">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-sm-6 col-lg-3 category_item" ng-repeat="category in ctrl.categories | limitTo: ctrl.size : (ctrl.page-1)*ctrl.size ">
+				<div class="width_category_wrap">
+					<img src="" ng-src="{{category.img}}" alt="img">
+				    <span>{{category.name}}</span>
+				    <button class="btn btn-outline-success btn-sm" ng-click="ctrl.show(category)">Show</button>
+				</div>
+	   		</div>
+		</div>
+		<div class="row">
+			<my-size ng-model='ctrl.size' sizes='[4,8,16]'></my-size>
+			<my-pagination ng-model="ctrl.page" size="ctrl.size" total-pages="ctrl.pageCount"></my-pagination>
+		</div>
+	</div>
+</div>
+

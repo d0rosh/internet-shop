@@ -1,0 +1,56 @@
+<div class="container">
+	<div class="row" ng-repeat="item in ctrl.item">
+		<div class="col-2"></div>
+		<div class="col-4 width-img">
+			<img ng-src="{{item.img}}" alt="img">
+		</div>
+		<div class="col-4">
+			<h2>{{item.name}}</h2>
+			<h5>{{item.price | uah}}</h5>
+			<h5>Розміри:{{ item.size}}</h5>
+			<button ng-click='ctrl.addToBasket(item)' type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Add</button>
+		</div>
+		<div class="col-2"></div>
+	</div>
+	<div class="row" ng-show="ctrl.selectedItem">	
+		 <div class="modal fade" id="myModal" role="dialog">
+		        <div class="modal-content">
+			      	<div class="row">
+			      		<div class="top col-6">
+				      		<h5>Товар добавлений в корзину</h5>
+				      	</div>
+				      	<div class="top col-4">
+				      		<a ng-click="ctrl.closeItem()"  data-dismiss="modal">Продовжити покупки</a>
+				      	</div>
+				      	<div class="top col-2">
+				      		<button type="button" class="close" ng-click="ctrl.closeItem()" data-dismiss="modal">&times;</button>
+				      	</div> 
+				      	<div class="col-6">
+				      		<div class="row item_info">
+				      			<div class="col-md-6 col-sm-12">
+				      				<img ng-src="{{ctrl.selectedItem.img}}" alt="img">
+				      			</div>
+				      			<div class="col-md-6 col-sm-0 border_right">
+				      				<h3>{{ctrl.selectedItem.name}}</h3>
+				      				<h5>{{ctrl.selectedItem.price | uah}}</h5>
+				      			</div>
+				      		</div>
+				      	</div>
+				      	<div class="col-6">
+				      		<div class="row item_info">
+				      			<div class="col-md-6 col-sm-6">
+				      				<p>Кількість товарів у корзині:</p>
+				      			</div>
+				      			<div class="col-md-6 col-sm-6">{{ctrl.getCount()}}</div>
+				      			<div class="col-md-6 col-sm-6">Ціна всіх товарів:</div>
+				      			<div class="col-md-6 col-sm-6">{{ctrl.getTotalPrice()}}</div>
+				      			<div class="col-md-12">
+				      				<button type="button" class="go_to_basket" ng-click="ctrl.go_to_basket()">Go to basket</button>
+				      			</div>
+				      		</div>
+				      	</div>
+			      	</div>  
+		        </div>  
+		  </div>
+	</div>
+</div>

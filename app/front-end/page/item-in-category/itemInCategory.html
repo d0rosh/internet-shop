@@ -1,0 +1,34 @@
+<div class="wrap_switch_btn">
+	<div class="view_btn">
+		<button class="list_btn" ng-click="ctrl.replaceView('list')"><i class="fa fa-list" aria-hidden="true"></i></button>
+		<button class="grid_btn active_view" ng-click="ctrl.replaceView('table')"><i class="fa fa-th" aria-hidden="true"></i></button>
+	</div>
+</div>
+<div class="container">
+	<div ng-switch on="ctrl.view">
+		<div ng-switch-when="list">
+			<div class="col-12">
+				<div ng-repeat="item in ctrl.itemsCategory">
+					<img ng-src="{{item.img}}" alt="img">
+					{{item.name}}
+					{{item.price | uah}}
+					{{item.size}}
+					<button class="btn btn-outline-success btn-sm" ng-click="ctrl.seeItem(item)">See</button>
+				</div>
+			</div>
+		</div>
+		<div ng-switch-when="table">
+			<div class="row">
+			    <div class="col-md-6 col-sm-6 col-lg-3" ng-repeat="item in ctrl.itemsCategory">
+				    <div class="table_wrap">
+				    	<img id="product" ng-src="{{item.img}}" alt="img">
+					    <span class="item_name">{{item.name}}</span>
+					    <span class="item_price">Ціна:{{ item.price | uah}}</span>
+					    <span>Розмір:{{ item.size}}</span>
+					    <button class="btn btn-outline-success btn-sm" ng-click="ctrl.seeItem(item)">See</button>
+				    </div>
+				</div>
+		    </div>
+		</div>
+	</div>
+</div>
